@@ -4,8 +4,6 @@ stages:
 
 variables:
   IMAGE_NAME: gribocheksan/hello-world-app:latest
-  DOCKER_USERNAME: gribocheksan
-  DOCKER_PASSWORD: Shinigami88@
 
 before_script:
   - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
