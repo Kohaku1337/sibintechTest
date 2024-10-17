@@ -2,14 +2,12 @@ image: docker:20.10.14
 
 services:
   - name: docker:20.10.14-dind
-    alias: docker
     command: ["--tls=false"]
 
 variables:
   DOCKER_HOST: "tcp://docker:2375"
   DOCKER_TLS_CERTDIR: ""
   IMAGE_NAME: "gribocheksan/hello-world-app:latest"
-  DOCKER_DRIVER: overlay2
 
 stages:
   - build
