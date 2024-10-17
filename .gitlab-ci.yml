@@ -1,12 +1,6 @@
-image: docker:20.10.14
-
-services:
-  - name: docker:20.10.14-dind
-    command: ["--tls=false"]
+image: docker:20.10.14  # Базовый образ для выполнения команд
 
 variables:
-  DOCKER_HOST: "tcp://docker:2375"
-  DOCKER_TLS_CERTDIR: ""
   IMAGE_NAME: "gribocheksan/hello-world-app:latest"
 
 stages:
@@ -16,8 +10,8 @@ stages:
 build_image:
   stage: build
   script:
-    - docker info  
-    - docker build -t $IMAGE_NAME .
+    - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin  # Логин в Docker Hub
+    - docker build -t $IMAGE_NAME .  # Построение Docker образа
   artifacts:
     paths:
       - Dockerfile
@@ -28,6 +22,6 @@ build_image:
 deploy:
   stage: deploy
   script:
-    - docker run -d -p 8080:8080 $IMAGE_NAME
+    - docker run -d -p 8080:8080 $IMAGE_NAME  # Запуск контейнера
   only:
     - main
