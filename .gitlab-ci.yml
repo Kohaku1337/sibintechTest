@@ -3,24 +3,22 @@ image: docker:20.10.14
 services:
   - name: docker:20.10.14-dind
     alias: docker
-    command: ["--tls=false"]   
+    command: ["--tls=false"]  
 
 variables:
   DOCKER_HOST: "tcp://docker:2375"  
   DOCKER_TLS_CERTDIR: ""            
   IMAGE_NAME: "gribocheksan/hello-world-app:latest"
-
+  DOCKER_DRIVER: overlay2 
+          
 stages:
   - build
   - deploy
 
-before_script:
-  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-
 build_image:
   stage: build
   script:
-    - docker build -t $IMAGE_NAME .
+    - docker build -t $IMAGE_NAME .  
   artifacts:
     paths:
       - Dockerfile
@@ -31,6 +29,6 @@ build_image:
 deploy:
   stage: deploy
   script:
-    - docker run -d -p 8080:8080 $IMAGE_NAME
+    - docker run -d -p 8080:8080 $IMAGE_NAME  
   only:
     - main
