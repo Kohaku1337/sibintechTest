@@ -11,6 +11,7 @@ variables:
 
 services:
   - name: docker:dind
+    alias: docker
     command: ["--tls=false"]
 
 before_script:
