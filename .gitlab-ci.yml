@@ -3,6 +3,8 @@ stages:
 
 variables:
   DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
 
 before_script:
   - docker info
@@ -16,5 +18,3 @@ build_image:
     - docker build -t my-app:latest .
   only:
     - main
-
-//test
