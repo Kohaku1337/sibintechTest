@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  IMAGE_NAME: gribocheksan/hello-world-app
+  IMAGE_NAME: gribocheksan/hello-world-app:latest
 
 before_script:
   - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
