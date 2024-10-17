@@ -1,17 +1,19 @@
 image: docker:20.10.14
+
 stages:
   - build
   - deploy
 
 variables:
   IMAGE_NAME: gribocheksan/hello-world-app:latest
-  DOCKER_HOST: "tcp://docker:2375/"
+  DOCKER_HOST: "tcp://localhost:2375"
   DOCKER_TLS_CERTDIR: ""
 
 services:
-  - docker:dind  
+  - docker:dind
 
 before_script:
+  - export DOCKER_HOST="tcp://localhost:2375"
   - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
 build_image:
