@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 image: docker:20.10.14
 
 variables:
@@ -9,7 +10,7 @@ stages:
 
 build_image:
   stage: build
-  script:f
+  script:
     - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
     - docker build -t $IMAGE_NAME . 
   artifacts:
@@ -24,4 +25,32 @@ deploy:
   script:
     - docker run -d -p 8080:8080 $IMAGE_NAME  
   only:
+=======
+image: docker:20.10.14
+
+variables:
+  IMAGE_NAME: "gribocheksan/hello-world-app:latest"
+
+stages:
+  - build
+  - deploy
+
+build_image:
+  stage: build
+  script:
+    - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+    - docker build -t $IMAGE_NAME . 
+  artifacts:
+    paths:
+      - Dockerfile
+      - main.go
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  script:
+    - docker run -d -p 8080:8080 $IMAGE_NAME  
+  only:
+>>>>>>> e3b24d9ba1d4ad22d5a22a74543d714a16f24a68
     - main
