@@ -9,7 +9,7 @@ stages:
 
 build_image:
   stage: build
-  script:
+  script:f
     - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
     - docker build -t $IMAGE_NAME . 
   artifacts:
