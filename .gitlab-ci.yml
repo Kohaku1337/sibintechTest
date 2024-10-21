@@ -1,0 +1,27 @@
+image: docker:20.10.14
+
+variables:
+  IMAGE_NAME: "gribocheksan/hello-world-app:latest"
+
+stages:
+  - build
+  - deploy
+
+build_image:
+  stage: build
+  script:
+    - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+    - docker build -t $IMAGE_NAME . 
+  artifacts:
+    paths:
+      - Dockerfile
+      - main.go
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  script:
+    - docker run -d -p 8080:8080 $IMAGE_NAME  
+  only:
+    - main
